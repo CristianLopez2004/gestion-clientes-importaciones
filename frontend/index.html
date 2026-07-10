@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ImportSmart CRM | Gestión de Clientes e Importaciones</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <div class="brand">
+          <span class="brand-icon">⇄</span>
+          <span>ImportSmart CRM</span>
+        </div>
+        <div class="nav-actions">
+          <a href="http://localhost:8080/docs" target="_blank" rel="noreferrer">Swagger</a>
+          <a href="#dashboard">Panel admin</a>
+        </div>
+      </nav>
+
+      <section class="hero-content">
+        <div class="hero-copy">
+          <span class="eyebrow">Sistema de Gestión de Clientes e Importaciones</span>
+          <h1>Controla clientes, solicitudes y cotizaciones desde un solo portal.</h1>
+          <p>
+            Demo web local conectada al API Gateway. Usa microservicios para clientes y solicitudes,
+            Kafka para eventos, PostgreSQL como capa de datos y una función serverless para cotizaciones.
+          </p>
+          <div class="hero-buttons">
+            <a class="btn primary" href="#clientes">Crear cliente</a>
+            <a class="btn secondary" href="#solicitudes">Crear solicitud</a>
+          </div>
+        </div>
+
+        <div class="glass-card hero-card">
+          <p class="mini-label">Arquitectura activa</p>
+          <h2>API Gateway</h2>
+          <p class="metric">localhost:8080</p>
+          <div class="flow">
+            <span>Frontend</span>
+            <span>Gateway</span>
+            <span>Servicios</span>
+            <span>BD/Kafka</span>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section id="dashboard" class="section dashboard">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Panel administrativo</span>
+            <h2>Resumen operativo</h2>
+          </div>
+          <button class="btn ghost" id="btnRefresh">Actualizar datos</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Clientes registrados</span>
+            <strong id="statClientes">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Solicitudes creadas</span>
+            <strong id="statSolicitudes">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>En proceso</span>
+            <strong id="statProceso">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Última cotización</span>
+            <strong id="statCotizacion">$0.00</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="section two-columns" id="clientes">
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <span class="eyebrow">Microservicio Clientes</span>
+              <h2>Registrar cliente</h2>
+            </div>
+            <span class="tag">POST /api/clientes</span>
+          </div>
+
+          <form id="clienteForm" class="form-grid">
+            <label>Nombre
+              <input id="clienteNombre" required placeholder="Ej. Cliente Demo" />
+            </label>
+            <label>Email
+              <input id="clienteEmail" type="email" required placeholder="cliente@email.com" />
+            </label>
+            <label>Teléfono
+              <input id="clienteTelefono" placeholder="0999999999" />
+            </label>
+            <label>Empresa
+              <input id="clienteEmpresa" placeholder="Importadora Demo" />
+            </label>
+            <button class="btn primary full" type="submit">Guardar cliente</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <span class="eyebrow">Consulta en tiempo real</span>
+              <h2>Clientes registrados</h2>
+            </div>
+            <span class="tag">GET /api/clientes</span>
+          </div>
+          <div id="clientesList" class="list empty">Sin clientes todavía.</div>
+        </article>
+      </section>
+
+      <section class="section two-columns" id="solicitudes">
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <span class="eyebrow">Microservicio Solicitudes + Kafka</span>
+              <h2>Nueva solicitud de importación</h2>
+            </div>
+            <span class="tag">POST /api/solicitudes</span>
+          </div>
+
+          <form id="solicitudForm" class="form-grid">
+            <label>Cliente
+              <select id="solCliente" required></select>
+            </label>
+            <label>Producto
+              <input id="solProducto" required placeholder="Ej. Audífonos Bluetooth" />
+            </label>
+            <label>País de origen
+              <input id="solPais" value="China" />
+            </label>
+            <label>Cantidad
+              <input id="solCantidad" type="number" min="1" value="100" required />
+            </label>
+            <label class="full">Descripción
+              <textarea id="solDescripcion" rows="3" placeholder="Descripción de la importación"></textarea>
+            </label>
+            <button class="btn primary full" type="submit">Crear solicitud</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <span class="eyebrow">Seguimiento de importaciones</span>
+              <h2>Solicitudes</h2>
+            </div>
+            <span class="tag">PATCH estado</span>
+          </div>
+          <div id="solicitudesList" class="list empty">Sin solicitudes todavía.</div>
+        </article>
+      </section>
+
+      <section class="section two-columns" id="cotizaciones">
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <span class="eyebrow">Función Serverless</span>
+              <h2>Calcular cotización</h2>
+            </div>
+            <span class="tag">POST /api/cotizaciones/calcular</span>
+          </div>
+
+          <form id="cotizacionForm" class="form-grid">
+            <label>Valor producto USD
+              <input id="valorProducto" type="number" step="0.01" value="500" />
+            </label>
+            <label>Envío USD
+              <input id="envio" type="number" step="0.01" value="120" />
+            </label>
+            <label>Impuestos %
+              <input id="impuestosPorcentaje" type="number" step="0.01" value="12" />
+            </label>
+            <label>Margen %
+              <input id="margenPorcentaje" type="number" step="0.01" value="20" />
+            </label>
+            <button class="btn primary full" type="submit">Calcular</button>
+          </form>
+        </article>
+
+        <article class="panel result-panel">
+          <div class="panel-head">
+            <div>
+              <span class="eyebrow">Resultado</span>
+              <h2>Cotización estimada</h2>
+            </div>
+          </div>
+          <div id="cotizacionResult" class="quote-result">
+            <span>Total estimado</span>
+            <strong>$0.00</strong>
+            <p>Ejecuta el cálculo para obtener el total de importación.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="section architecture">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Relación con el blueprint</span>
+            <h2>Componentes implementados</h2>
+          </div>
+        </div>
+        <div class="arch-grid">
+          <article><strong>Portal Web CRM</strong><span>Interfaz demo local en localhost:5173.</span></article>
+          <article><strong>API Gateway</strong><span>Centraliza las rutas REST y Swagger.</span></article>
+          <article><strong>Servicio Clientes</strong><span>CRUD básico de clientes.</span></article>
+          <article><strong>Servicio Solicitudes</strong><span>Gestión y estados de importación.</span></article>
+          <article><strong>Kafka</strong><span>Eventos al crear o actualizar solicitudes.</span></article>
+          <article><strong>PostgreSQL</strong><span>Persistencia en Docker.</span></article>
+          <article><strong>Serverless</strong><span>Función de cotización estimada.</span></article>
+          <article><strong>Swagger</strong><span>Documentación REST de la solución.</span></article>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

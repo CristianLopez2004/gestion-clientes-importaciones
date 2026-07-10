@@ -4,6 +4,7 @@ Proyecto integrador de arquitectura de software. Implementa una solución básic
 
 ## Arquitectura implementada
 
+- **Frontend Web CRM:** portal demo local para registrar clientes, solicitudes y cotizaciones.
 - **API Gateway:** expone la API REST centralizada y documentación Swagger.
 - **Servicio de Clientes:** registra y consulta clientes.
 - **Servicio de Solicitudes de Importación:** registra solicitudes y publica eventos en Kafka.
@@ -26,6 +27,7 @@ docker compose up --build
 
 Cuando termine de levantar, abre:
 
+- Plataforma Web Demo: http://localhost:5173
 - Swagger API Gateway: http://localhost:8080/docs
 - Health API Gateway: http://localhost:8080/health
 - Azure Function local: http://localhost:7071/api/cotizacion/calcular
@@ -65,12 +67,13 @@ curl -X POST http://localhost:8080/api/cotizaciones/calcular \
 ## Evidencias sugeridas para el informe
 
 1. Captura de `docker compose up --build` con contenedores ejecutándose.
-2. Captura de Swagger en `http://localhost:8080/docs`.
-3. Captura creando un cliente desde Swagger o curl.
-4. Captura creando una solicitud de importación.
-5. Captura de logs del servicio de solicitudes publicando evento en Kafka.
-6. Captura de la función serverless calculando una cotización.
-7. Captura de la base de datos PostgreSQL con registros creados.
+2. Captura de la plataforma web demo en `http://localhost:5173`.
+3. Captura registrando un cliente desde la plataforma web.
+4. Captura creando una solicitud de importación desde la plataforma web.
+5. Captura calculando una cotización desde la plataforma web.
+6. Captura de Swagger en `http://localhost:8080/docs`.
+7. Captura de logs del servicio de solicitudes publicando evento en Kafka.
+8. Captura de Docker Desktop con los contenedores activos.
 
 ## Limpieza
 
