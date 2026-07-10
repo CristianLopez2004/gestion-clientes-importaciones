@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: Sistema de Gestión de Clientes e Importaciones
+  version: 1.0.0
+  description: API Gateway para clientes, solicitudes de importación y cotizaciones.
+servers:
+  - url: http://localhost:8080
+paths:
+  /health:
+    get:
+      summary: Verifica estado del API Gateway
+      responses:
+        '200':
+          description: Servicio activo
+  /api/clientes:
+    get:
+      summary: Lista clientes
+      responses:
+        '200':
+          description: Lista de clientes
+    post:
+      summary: Crea un cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nombre, email]
+              properties:
+                nombre:
+                  type: string
+                email:
+                  type: string
+                telefono:
+                  type: string
+                empresa:
+                  type: string
+      responses:
+        '201':
+          description: Cliente creado
+  /api/clientes/{id}:
+    get:
+      summary: Obtiene un cliente por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente encontrado
+    put:
+      summary: Actualiza un cliente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Cliente actualizado
+  /api/solicitudes:
+    get:
+      summary: Lista solicitudes de importación
+      responses:
+        '200':
+          description: Lista de solicitudes
+    post:
+      summary: Crea una solicitud de importación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [cliente_id, producto, cantidad]
+              properties:
+                cliente_id:
+                  type: integer
+                producto:
+                  type: string
+                descripcion:
+                  type: string
+                pais_origen:
+                  type: string
+                cantidad:
+                  type: integer
+      responses:
+        '201':
+          description: Solicitud creada y evento publicado
+  /api/solicitudes/{id}/estado:
+    patch:
+      summary: Actualiza estado de una solicitud
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [estado]
+              properties:
+                estado:
+                  type: string
+                  example: En proceso
+      responses:
+        '200':
+          description: Estado actualizado
+  /api/cotizaciones/calcular:
+    post:
+      summary: Calcula cotización mediante función serverless
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [valorProducto, envio, impuestosPorcentaje, margenPorcentaje]
+              properties:
+                valorProducto:
+                  type: number
+                envio:
+                  type: number
+                impuestosPorcentaje:
+                  type: number
+                margenPorcentaje:
+                  type: number
+      responses:
+        '200':
+          description: Cotización calculada

@@ -1,0 +1,104 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: gci-postgres
+    environment:
+      POSTGRES_DB: importacionesdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d importacionesdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    container_name: gci-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    container_name: gci-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  clientes-service:
+    build: ./clientes-service
+    container_name: gci-clientes-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 3001
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: importacionesdb
+      DB_USER: appuser
+      DB_PASSWORD: apppassword
+    ports:
+      - "3001:3001"
+
+  solicitudes-service:
+    build: ./solicitudes-service
+    container_name: gci-solicitudes-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    environment:
+      PORT: 3002
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: importacionesdb
+      DB_USER: appuser
+      DB_PASSWORD: apppassword
+      KAFKA_BROKER: kafka:29092
+      KAFKA_TOPIC: solicitudes-importacion
+    ports:
+      - "3002:3002"
+
+  cotizaciones-function:
+    build: ./cotizaciones-function
+    container_name: gci-cotizaciones-function
+    environment:
+      AzureWebJobsScriptRoot: /home/site/wwwroot
+      AzureFunctionsJobHost__Logging__Console__IsEnabled: "true"
+      FUNCTIONS_WORKER_RUNTIME: node
+    ports:
+      - "7071:80"
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: gci-api-gateway
+    depends_on:
+      - clientes-service
+      - solicitudes-service
+      - cotizaciones-function
+    environment:
+      PORT: 8080
+      CLIENTES_URL: http://clientes-service:3001
+      SOLICITUDES_URL: http://solicitudes-service:3002
+      COTIZACIONES_URL: http://cotizaciones-function
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:

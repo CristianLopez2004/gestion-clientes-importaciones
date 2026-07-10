@@ -1,0 +1,12 @@
+{
+  "name": "cotizaciones-function",
+  "version": "1.0.0",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start --javascript"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.7.0"
+  },
+  "devDependencies": {}
+}
