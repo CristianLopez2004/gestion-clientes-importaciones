@@ -97,6 +97,10 @@ services:
       CLIENTES_URL: http://clientes-service:3001
       SOLICITUDES_URL: http://solicitudes-service:3002
       COTIZACIONES_URL: http://cotizaciones-function
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: admin123
+      ASESOR_USER: asesor
+      ASESOR_PASSWORD: asesor123
     ports:
       - "8080:8080"
 

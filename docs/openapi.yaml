@@ -1,10 +1,16 @@
 openapi: 3.0.3
 info:
   title: Sistema de Gestión de Clientes e Importaciones
-  version: 1.0.0
-  description: API Gateway para clientes, solicitudes de importación y cotizaciones.
+  version: 1.1.0
+  description: API Gateway para autenticación, clientes, solicitudes de importación y cotizaciones.
 servers:
   - url: http://localhost:8080
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
 paths:
   /health:
     get:
@@ -12,14 +18,62 @@ paths:
       responses:
         '200':
           description: Servicio activo
+  /auth/login:
+    post:
+      summary: Inicia sesión con usuario y contraseña
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                  example: admin
+                password:
+                  type: string
+                  example: admin123
+      responses:
+        '200':
+          description: Sesión iniciada correctamente
+        '401':
+          description: Credenciales inválidas
+  /auth/me:
+    get:
+      summary: Consulta el usuario autenticado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Usuario autenticado
+        '401':
+          description: No autenticado
+  /auth/logout:
+    post:
+      summary: Cierra la sesión actual
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Sesión cerrada
+        '401':
+          description: No autenticado
   /api/clientes:
     get:
       summary: Lista clientes
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de clientes
+        '401':
+          description: No autenticado
     post:
       summary: Crea un cliente
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -39,9 +93,13 @@ paths:
       responses:
         '201':
           description: Cliente creado
+        '401':
+          description: No autenticado
   /api/clientes/{id}:
     get:
       summary: Obtiene un cliente por ID
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -51,8 +109,12 @@ paths:
       responses:
         '200':
           description: Cliente encontrado
+        '401':
+          description: No autenticado
     put:
       summary: Actualiza un cliente
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -68,14 +130,22 @@ paths:
       responses:
         '200':
           description: Cliente actualizado
+        '401':
+          description: No autenticado
   /api/solicitudes:
     get:
       summary: Lista solicitudes de importación
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de solicitudes
+        '401':
+          description: No autenticado
     post:
       summary: Crea una solicitud de importación
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -97,9 +167,13 @@ paths:
       responses:
         '201':
           description: Solicitud creada y evento publicado
+        '401':
+          description: No autenticado
   /api/solicitudes/{id}/estado:
     patch:
       summary: Actualiza estado de una solicitud
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -120,9 +194,13 @@ paths:
       responses:
         '200':
           description: Estado actualizado
+        '401':
+          description: No autenticado
   /api/cotizaciones/calcular:
     post:
       summary: Calcula cotización mediante función serverless
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -142,3 +220,5 @@ paths:
       responses:
         '200':
           description: Cotización calculada
+        '401':
+          description: No autenticado

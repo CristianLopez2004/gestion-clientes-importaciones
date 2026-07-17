@@ -1,9 +1,11 @@
 const API_BASE = 'http://localhost:8080';
+const AUTH_KEY = 'importsmart_auth';
 
 const state = {
   clientes: [],
   solicitudes: [],
-  ultimaCotizacion: 0
+  ultimaCotizacion: 0,
+  auth: null
 };
 
 const $ = (id) => document.getElementById(id);
@@ -15,12 +17,57 @@ function toast(message, type = 'ok') {
   setTimeout(() => node.className = 'toast', 3200);
 }
 
+function guardarSesion(auth) {
+  state.auth = auth;
+  localStorage.setItem(AUTH_KEY, JSON.stringify(auth));
+}
+
+function leerSesion() {
+  try {
+    return JSON.parse(localStorage.getItem(AUTH_KEY));
+  } catch {
+    return null;
+  }
+}
+
+function limpiarSesion() {
+  state.auth = null;
+  localStorage.removeItem(AUTH_KEY);
+}
+
+function mostrarLogin() {
+  $('loginScreen').classList.remove('hidden');
+  $('appHeader').classList.add('hidden');
+  $('appMain').classList.add('hidden');
+}
+
+function mostrarApp() {
+  $('loginScreen').classList.add('hidden');
+  $('appHeader').classList.remove('hidden');
+  $('appMain').classList.remove('hidden');
+  const user = state.auth?.user;
+  $('currentUser').textContent = user ? `${user.nombre} · ${user.rol}` : '';
+}
+
 async function api(path, options = {}) {
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(state.auth?.token ? { Authorization: `Bearer ${state.auth.token}` } : {}),
+    ...(options.headers || {})
+  };
+
   const response = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+    headers,
     ...options
   });
   const data = await response.json().catch(() => ({}));
+
+  if (response.status === 401) {
+    limpiarSesion();
+    mostrarLogin();
+    throw new Error(data.error || 'Sesión no válida. Inicie sesión nuevamente.');
+  }
+
   if (!response.ok) throw new Error(data.error || data.detail || 'Error consultando API');
   return data;
 }
@@ -117,6 +164,45 @@ async function cargarDatos() {
   }
 }
 
+$('loginForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  try {
+    const result = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: $('loginUsername').value.trim(),
+        password: $('loginPassword').value
+      })
+    }).then(async response => {
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || data.detail || 'No se pudo iniciar sesión');
+      return data;
+    });
+
+    guardarSesion(result);
+    mostrarApp();
+    toast(`Bienvenido, ${result.user.nombre}`);
+    await cargarDatos();
+  } catch (error) {
+    toast(error.message, 'error');
+  }
+});
+
+$('btnLogout').addEventListener('click', async () => {
+  try {
+    if (state.auth?.token) {
+      await api('/auth/logout', { method: 'POST' });
+    }
+  } catch {
+    // Aunque falle el cierre remoto, se limpia la sesión local.
+  } finally {
+    limpiarSesion();
+    mostrarLogin();
+    toast('Sesión cerrada correctamente');
+  }
+});
+
 $('btnRefresh').addEventListener('click', cargarDatos);
 
 $('clienteForm').addEventListener('submit', async (event) => {
@@ -200,5 +286,23 @@ async function actualizarEstado(id, estado) {
   }
 }
 
+async function iniciarApp() {
+  const auth = leerSesion();
+  if (!auth?.token) {
+    mostrarLogin();
+    return;
+  }
+
+  state.auth = auth;
+  try {
+    await api('/auth/me');
+    mostrarApp();
+    await cargarDatos();
+  } catch {
+    limpiarSesion();
+    mostrarLogin();
+  }
+}
+
 window.actualizarEstado = actualizarEstado;
-cargarDatos();
+iniciarApp();

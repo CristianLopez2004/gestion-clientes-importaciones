@@ -23,3 +23,12 @@ La solución local usa Docker para reducir costos académicos. En la nube, los c
 
 ## Performance y escalabilidad
 Los microservicios permiten escalar de manera independiente. Si crecen las solicitudes de importación, se escala solo el servicio de solicitudes sin afectar el servicio de clientes.
+
+## Seguridad y autenticación
+La plataforma incorpora una autenticación básica de demo mediante usuario y contraseña desde el frontend web. El API Gateway expone el endpoint `POST /auth/login`, valida credenciales de usuarios demo y devuelve un token tipo Bearer. Las rutas de negocio `/api/clientes`, `/api/solicitudes` y `/api/cotizaciones/calcular` quedan protegidas mediante middleware de autenticación.
+
+Usuarios demo:
+- Administrador: `admin` / `admin123`
+- Asesor: `asesor` / `asesor123`
+
+El frontend almacena temporalmente el token en `localStorage`, lo envía en cada petición mediante el encabezado `Authorization: Bearer <token>` y permite cerrar sesión. En un ambiente productivo se recomienda reemplazar esta autenticación demo por OAuth2, Azure AD B2C, Keycloak o un proveedor IAM equivalente, usando HTTPS, expiración de tokens, refresh tokens, políticas de contraseña y control de permisos por rol.
