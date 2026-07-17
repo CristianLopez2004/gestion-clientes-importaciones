@@ -1,0 +1,130 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram id="16e1164d-a531-403c-a5e0-bf4700970192" name="04_Infraestructura_Local">
+    <mxGraphModel dx="1323" dy="715" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="id3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;fontSize=22;" value="&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;C4 / Infraestructura Local — Sistema de Gestión de Clientes e Importaciones&lt;/b&gt;" vertex="1">
+          <mxGeometry height="45" width="880" x="210" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="id4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#166534;strokeColor=#22c55e;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="Despliegue local ejecutado con &lt;b&gt;Docker Compose&lt;/b&gt;. Muestra navegador, puertos expuestos, red interna Docker, contenedores, base de datos, mensajería, logs y repositorio." vertex="1">
+          <mxGeometry height="50" width="760" x="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="id5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e40af;strokeColor=#60a5fa;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;Navegador Web&lt;/b&gt;&lt;br&gt;[Usuario local]&lt;br&gt;&lt;br&gt;Accede a la plataforma y a Swagger." vertex="1">
+          <mxGeometry height="95" width="180" x="40" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="id6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#374151;strokeColor=#9ca3af;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;GitHub Repository&lt;/b&gt;&lt;br&gt;[Repositorio externo]&lt;br&gt;&lt;br&gt;Código fuente, documentación, diagramas y evidencias." vertex="1">
+          <mxGeometry height="110" width="210" x="40" y="685" as="geometry" />
+        </mxCell>
+        <mxCell id="id7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#64748b;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;fontSize=15;verticalAlign=top;align=left;spacingTop=12;spacingLeft=14;" value="&lt;b&gt;Equipo local del desarrollador&lt;/b&gt;&lt;br&gt;Windows + Docker Desktop" vertex="1">
+          <mxGeometry height="690" width="1030" x="280" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="id8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0b1220;strokeColor=#38bdf8;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;fontSize=14;verticalAlign=top;align=left;spacingTop=12;spacingLeft=14;" value="&lt;b&gt;Docker Desktop / Docker Compose&lt;/b&gt;&lt;br&gt;Comando: docker compose up --build" vertex="1">
+          <mxGeometry height="545" width="910" x="330" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="id9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#64748b;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;Puertos expuestos en localhost&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="805" x="365" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="id10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#64748b;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;verticalAlign=top;spacingTop=8;" value="&lt;b&gt;Red interna Docker&lt;/b&gt;&lt;br&gt;Comunicación entre contenedores por nombre de servicio" vertex="1">
+          <mxGeometry height="280" width="805" x="365" y="405" as="geometry" />
+        </mxCell>
+        <mxCell id="id11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2563eb;strokeColor=#93c5fd;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;frontend&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;HTML / CSS / JS&lt;br&gt;&lt;b&gt;localhost:5173&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="180" x="400" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="id12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2563eb;strokeColor=#93c5fd;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;api-gateway&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Node.js / Express&lt;br&gt;&lt;b&gt;localhost:8080&lt;/b&gt;&lt;br&gt;/docs Swagger" vertex="1">
+          <mxGeometry height="105" width="205" x="660" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="id13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#7dd3fc;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;clientes-service&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Node.js / Express&lt;br&gt;CRUD clientes" vertex="1">
+          <mxGeometry height="90" width="170" x="405" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="id14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#7dd3fc;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;solicitudes-service&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Node.js / Express&lt;br&gt;Solicitudes + estados" vertex="1">
+          <mxGeometry height="90" width="190" x="610" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="id15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0ea5e9;strokeColor=#7dd3fc;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;cotizaciones-function&lt;/b&gt;&lt;br&gt;[Serverless Function]&lt;br&gt;Cálculo de cotización" vertex="1">
+          <mxGeometry height="90" width="190" x="835" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="id16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ca8a04;strokeColor=#fde68a;fontColor=#111827;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;postgres&lt;/b&gt;&lt;br&gt;[Container DB]&lt;br&gt;PostgreSQL&lt;br&gt;Puerto interno: 5432&lt;br&gt;Volumen: postgres_data" vertex="1">
+          <mxGeometry height="105" width="190" x="395" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="id17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f59e0b;strokeColor=#fde68a;fontColor=#111827;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;kafka&lt;/b&gt;&lt;br&gt;[Container Broker]&lt;br&gt;Eventos de solicitudes&lt;br&gt;Puerto interno: 9092" vertex="1">
+          <mxGeometry height="105" width="185" x="645" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="id18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f59e0b;strokeColor=#fde68a;fontColor=#111827;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;zookeeper&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Coordinación de Kafka&lt;br&gt;Puerto interno: 2181" vertex="1">
+          <mxGeometry height="105" width="190" x="875" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="id19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;Logs / Monitoreo básico&lt;/b&gt;&lt;br&gt;docker compose logs&lt;br&gt;Endpoint /health en API Gateway" vertex="1">
+          <mxGeometry height="105" width="190" x="1010" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="id20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;Variables de entorno&lt;/b&gt;&lt;br&gt;Configuración de conexión interna&lt;br&gt;Credenciales de PostgreSQL" vertex="1">
+          <mxGeometry height="90" width="230" x="1010" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="id21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4c1d95;strokeColor=#c4b5fd;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;Swagger / OpenAPI&lt;/b&gt;&lt;br&gt;[Documentación]&lt;br&gt;http://localhost:8080/docs" vertex="1">
+          <mxGeometry height="90" width="200" x="1340" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="id22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4b5563;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=13;spacing=8;align=center;verticalAlign=middle;" value="&lt;b&gt;ERP / Facturación&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;Integración futura para facturación administrativa." vertex="1">
+          <mxGeometry height="110" width="210" x="1340" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="id23" edge="1" parent="1" source="id5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id11" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;HTTP localhost:5173&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id24" edge="1" parent="1" source="id5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id12" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Swagger / API localhost:8080&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id25" edge="1" parent="1" source="id11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id12" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;HTTP REST / JSON&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id26" edge="1" parent="1" source="id12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id13" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;REST interno&lt;/span&gt;">
+          <mxGeometry relative="1" x="0.1625" y="-63" as="geometry">
+            <mxPoint x="63" y="-63" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="id27" edge="1" parent="1" source="id12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id14" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;REST interno&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id28" edge="1" parent="1" source="id12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id15" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;HTTP POST / cálculo&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id29" edge="1" parent="1" source="id13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id16" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;SQL interno&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id30" edge="1" parent="1" source="id14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id16" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;SQL interno&lt;/span&gt;">
+          <mxGeometry relative="1" x="-0.7073" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="id31" edge="1" parent="1" source="id14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id17" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Publica evento&lt;/span&gt;">
+          <mxGeometry relative="1" x="-0.4483" y="-5" as="geometry">
+            <mxPoint x="-5" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="id32" edge="1" parent="1" source="id17" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id18" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Coordinación broker&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id33" edge="1" parent="1" source="id12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id21" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Expone /docs&lt;/span&gt;">
+          <mxGeometry relative="1" x="-0.644" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="id34" edge="1" parent="1" source="id14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;dashed=1;" target="id22" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Integración futura&lt;/span&gt;">
+          <mxGeometry relative="1" x="0.042" y="10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="id35" edge="1" parent="1" source="id8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id19" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Registra logs&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id36" edge="1" parent="1" source="id20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;dashed=1;" target="id16" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Configura acceso&lt;/span&gt;">
+          <mxGeometry relative="1" x="0.1624" y="5" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="id37" edge="1" parent="1" source="id6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;" target="id7" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;git clone / git pull&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="id38" edge="1" parent="1" source="id7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#d1d5db;fontColor=#ffffff;fontSize=11;endArrow=block;endFill=1;dashed=1;" target="id6" value="git push">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
